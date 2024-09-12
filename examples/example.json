@@ -1,0 +1,187 @@
+[
+  {
+    "id": "997d7866edb88aa5",
+    "type": "fordconnect-save-tokens",
+    "z": "3c50a642893f35f2",
+    "refreshToken": "",
+    "accessToken": "",
+    "x": 490,
+    "y": 60,
+    "wires": [["b58141b82b6c82a8"]]
+  },
+  {
+    "id": "b58141b82b6c82a8",
+    "type": "debug",
+    "z": "3c50a642893f35f2",
+    "name": "fordpass tokens",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 680,
+    "y": 60,
+    "wires": []
+  },
+  {
+    "id": "bebe479d1a0d2c5a",
+    "type": "fordconnect-get-vehicle-info",
+    "z": "3c50a642893f35f2",
+    "name": "",
+    "vehicleId": "",
+    "x": 340,
+    "y": 180,
+    "wires": [["c8d8898d1049da5b"], ["85642287506461f6"]]
+  },
+  {
+    "id": "91f3564e82d22f83",
+    "type": "inject",
+    "z": "3c50a642893f35f2",
+    "name": "",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "topic",
+        "vt": "str"
+      }
+    ],
+    "repeat": "14400",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "",
+    "payloadType": "date",
+    "x": 130,
+    "y": 180,
+    "wires": [["bebe479d1a0d2c5a"]]
+  },
+  {
+    "id": "c8d8898d1049da5b",
+    "type": "debug",
+    "z": "3c50a642893f35f2",
+    "name": "vehicle info",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 590,
+    "y": 180,
+    "wires": []
+  },
+  {
+    "id": "85642287506461f6",
+    "type": "fordconnect-get-tokens",
+    "z": "3c50a642893f35f2",
+    "x": 330,
+    "y": 240,
+    "wires": [["edde9dd166c0603f"]]
+  },
+  {
+    "id": "edde9dd166c0603f",
+    "type": "fordconnect-save-tokens",
+    "z": "3c50a642893f35f2",
+    "refreshToken": "",
+    "accessToken": "",
+    "x": 330,
+    "y": 300,
+    "wires": [["bebe479d1a0d2c5a"]]
+  },
+  {
+    "id": "4d8859c765064006",
+    "type": "fordconnect-generate-tokens",
+    "z": "3c50a642893f35f2",
+    "name": "",
+    "clientId": "",
+    "clientSecret": "",
+    "authCode": "",
+    "x": 300,
+    "y": 60,
+    "wires": [["997d7866edb88aa5"]]
+  },
+  {
+    "id": "e8e3789aade11342",
+    "type": "inject",
+    "z": "3c50a642893f35f2",
+    "name": "",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "topic",
+        "vt": "str"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "",
+    "payloadType": "date",
+    "x": 120,
+    "y": 60,
+    "wires": [["4d8859c765064006"]]
+  },
+  {
+    "id": "2b2be052dd202dd9",
+    "type": "fordconnect-get-vehicle-list",
+    "z": "3c50a642893f35f2",
+    "name": "",
+    "x": 340,
+    "y": 120,
+    "wires": [["d1167b013293844d"], []]
+  },
+  {
+    "id": "598d0651e2dea001",
+    "type": "inject",
+    "z": "3c50a642893f35f2",
+    "name": "",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "topic",
+        "vt": "str"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "",
+    "payloadType": "date",
+    "x": 120,
+    "y": 120,
+    "wires": [["2b2be052dd202dd9"]]
+  },
+  {
+    "id": "d1167b013293844d",
+    "type": "debug",
+    "z": "3c50a642893f35f2",
+    "name": "vehicle list",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 590,
+    "y": 120,
+    "wires": []
+  }
+]

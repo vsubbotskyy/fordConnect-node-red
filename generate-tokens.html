@@ -1,0 +1,73 @@
+<script type="text/javascript">
+  RED.nodes.registerType("fordconnect-generate-tokens", {
+    category: "FordConnect",
+    color: "#fc6603",
+    inputs: 1,
+    outputs: 1,
+    icon: "Ford-logo.svg",
+    defaults: {
+      name: { value: "" },
+      clientId: { value: "", required: true },
+      clientSecret: { value: "", required: true },
+      authCode: { value: "", required: true },
+    },
+    label: function () {
+      return this.name || "Generate tokens";
+    },
+    paletteLabel: "Generate tokens",
+  });
+</script>
+
+<script type="text/html" data-template-name="fordconnect-generate-tokens">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i>Name</label>
+    <input type="text" id="node-input-name" />
+    <div class="form-row">
+      <div class="form-row">
+        <label for="node-input-clientId"
+          ><i class="fa fa-user"></i>Client ID</label
+        >
+        <input type="text" id="node-input-clientId" />
+      </div>
+      <div class="form-row">
+        <label for="node-input-clientSecret"
+          ><i class="fa fa-user-secret"></i>Client secret</label
+        >
+        <input type="text" id="node-input-clientSecret" />
+      </div>
+      <label for="node-input-authCode"
+        ><i class="fa fa-user"></i>Authorization code</label
+      >
+      <input type="text" id="node-input-authCode" />
+    </div>
+  </div>
+</script>
+
+<script type="text/html" data-help-name="fordconnect-generate-tokens">
+  <p>Generating the tokens for working with FordConnect API</p>
+  <h3>Input</h3>
+  <p>Any input to trigger the request</p>
+  <h3>Output</h3>
+  <p>
+    Forwarding msg.payload along with generated tokens and clientId,
+    clientSecret
+  </p>
+  <h3>Details</h3>
+  <p>
+    The clientId and clientSecret pair will be stored to the flow context for
+    future use as <strong>fordConnectClientId</strong>,
+    <strong>fordConnectClientSecret</strong>
+  </p>
+  <p>
+    These values can be used in other nodes by accessing
+    <code>flow.get('fordConnectClientId')</code> etc.
+  </p>
+  <p>
+    To preserve context between node-red restarts you can configure node-red to
+    save context to the file system. More details
+    <a
+      href="https://nodered.org/docs/user-guide/context#saving-context-data-to-the-file-system"
+      >here</a
+    >
+  </p>
+</script>

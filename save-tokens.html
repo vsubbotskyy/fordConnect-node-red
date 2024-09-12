@@ -1,0 +1,66 @@
+<script type="text/javascript">
+  RED.nodes.registerType("fordconnect-save-tokens", {
+    category: "FordConnect",
+    color: "#fc6603",
+    inputs: 1,
+    outputs: 1,
+    icon: "Ford-logo.svg",
+    defaults: {
+      name: { value: "" },
+      refreshToken: { value: "" },
+      accessToken: { value: "" },
+    },
+    label: function () {
+      return this.name || "Save tokens";
+    },
+    paletteLabel: "Save tokens",
+  });
+</script>
+
+<script type="text/html" data-template-name="fordconnect-save-tokens">
+  <div class="form-row">
+    <label for="node-input-refreshToken"
+      ><i class="fa fa-user"></i>Refresh token</label
+    >
+    <input type="text" id="node-input-refreshToken" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-accessToken"
+      ><i class="fa fa-user"></i>Access token</label
+    >
+    <input type="text" id="node-input-accessToken" />
+  </div>
+</script>
+
+<script type="text/html" data-help-name="fordconnect-save-tokens">
+  <p>Storing the tokens for working with FordConnect API</p>
+  <p>
+    The <i>accessToken</i> and <i>refreshToken</i> are not required in node
+    configuration, but if not provided should be passed inside
+    <i>message.payload</i> on input
+  </p>
+  <h3>Input</h3>
+  <p><strong>refreshToken</strong> - Refresh token from FordConnect API</p>
+  <p><strong>accessToken</strong> - Access token from FordConnect API</p>
+  <h3>Output</h3>
+  <p>Forwarding msg.payload along with updated tokens</p>
+  <h3>Details</h3>
+  <p>Tokens provided in msg.payload will override node configuration.</p>
+  <p>
+    The tokens will be stored to the flow context for future use as
+    <strong>fordConnectAccessToken</strong>,
+    <strong>fordConnectRefreshToken</strong>
+  </p>
+  <p>
+    These values can be used in other nodes by accessing
+    <code>flow.get('fordConnectAccessToken')</code> etc.
+  </p>
+  <p>
+    To preserve context between node-red restarts you can configure node-red to
+    save context to the file system. More details
+    <a
+      href="https://nodered.org/docs/user-guide/context#saving-context-data-to-the-file-system"
+      >here</a
+    >
+  </p>
+</script>

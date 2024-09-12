@@ -1,0 +1,19 @@
+{
+  "name": "@tally/fordconnect",
+  "version": "1.0.0",
+  "description": "Using official FordConnect API to get vehicle details",
+  "dependencies": {},
+  "keywords": [
+    "node-red"
+  ],
+  "node-red": {
+    "version": ">=2.0.0",
+    "nodes": {
+      "fordconnect-generate-tokens": "generate-tokens.js",
+      "fordconnect-save-tokens": "save-tokens.js",
+      "fordconnect-get-vehicle-list": "get-vehicle-list.js",
+      "fordconnect-get-vehicle-info": "get-vehicle-info.js",
+      "fordconnect-get-tokens": "get-tokens.js"
+    }
+  }
+}

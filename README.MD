@@ -1,11 +1,11 @@
 The FordConnect API allows developers to integrate FordConnect features into their applications. With the API, you can access vehicle data, control vehicle functions. This instructions will guide you through the process of using the FordConnect API in your node-red flows. Let's get started!
 
-##Prerequisites
+## Prerequisites
 
 - Ford developer account. Generate clientId/clientSecret pair. More on: https://developer.ford.com/
 - FordPass account. Be sure to complete your account setup before attempting to account link.
 
-###Account Link
+### Account Link
 
 - Go to https://fordconnect.cv.ford.com/common/login/?make=F&application_id=AFDC085B-377A-4351-B23E-5E1D35FB3700&client_id=30990062-9618-40e1-a27b-7c6bcb23658a&response_type=code&state=123&redirect_uri=https%3A%2F%2Flocalhost%3A3000&scope=access
   Make sure that the Client ID in this URL matches the Client ID you received from developer.ford.com
@@ -14,8 +14,12 @@ The FordConnect API allows developers to integrate FordConnect features into the
 - After you authorize the data sharing, you will be redirected to the _redirect_uri_ from the above url with the authorization code
 - You will need the value after _code=_ for the _generate-tokens_ node
 
-###Obtaining tokens
-Generate tokens using auth code and clientId, clientSecret
+### Obtaining tokens
 
-###Using the API
+Generate tokens using auth code and clientId, clientSecret
+![generate tokens flow](https://vsubbotskyy.github.io/fordConnect-node-red/images/generate-tokens.jpg)
+
+### Using the API
+
 After tokens are generated and saved to context you can start making requests to the API
+![get vehicles list](https://vsubbotskyy.github.io/fordConnect-node-red/images/get-vehicles.jpg)

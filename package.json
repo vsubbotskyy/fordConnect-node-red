@@ -15,5 +15,9 @@
       "fordconnect-get-vehicle-info": "get-vehicle-info.js",
       "fordconnect-get-tokens": "get-tokens.js"
     }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vsubbotskyy/fordConnect-node-red.git"
   }
 }

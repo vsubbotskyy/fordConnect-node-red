@@ -1,3 +1,5 @@
+const handleResponse = require("./utils/handleResponse");
+
 module.exports = function (RED) {
   function FordConnectGetVehicleInfoNode(config) {
     RED.nodes.createNode(this, config);
@@ -25,45 +27,16 @@ module.exports = function (RED) {
         }
       )
         .then((response) => {
-          if (response.status !== "SUCCESS") {
-            this.status({
-              fill: "red",
-              shape: "ring",
-              text: response.statusText,
-            });
-            this.log(
-              "FordConnect. Get vehicle info. fetch failed with status code: " +
-                response.status
-            );
-            switch (response.status) {
-              case 401:
-                this.error(
-                  "FordConnect. Get vehicle info. Unauthorized request"
-                );
-                this.status({
-                  fill: "red",
-                  shape: "ring",
-                  text: "Unauthorized",
-                });
-                send([
-                  null,
-                  {
-                    payload:
-                      "Unauthorized request. Please get the new access token",
-                  },
-                ]);
-                break;
-              default:
-                this.error(
-                  "FordConnect. Get vehicle info. error: " + response.statusText
-                );
-                this.status({
-                  fill: "red",
-                  shape: "ring",
-                  text: response.statusText,
-                });
-            }
-            done(response.statusText);
+          if (
+            !handleResponse(
+              response,
+              node,
+              "FordConnect. Get vehicle info.",
+              send,
+              done
+            )
+          ) {
+            return;
           }
           this.log("FordConnect. Get vehicle info. received response");
           return response.json();

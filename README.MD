@@ -26,3 +26,9 @@ After tokens are generated and saved to context you can start making requests to
 
 Access token is valid for 20 minutes, so if the request is failed with 401 status the token is probably expired. Error will be forwarded to the second output to which get new tokens node can be hooked up
 ![get vehicle details](https://vsubbotskyy.github.io/fordConnect-node-red/images/get-vehicle-details.jpg)
+
+Sometimes vehicle info can be outdated, because server will return cached last values. To fetch the relevant data vehicle status request can be made. The request is non-blocking, so to delay output until refresh is completed "Wait for result check box" can be enabled in node config. There's also poll interval and max retry settings.
+![refresh vehicle status](https://vsubbotskyy.github.io/fordConnect-node-red/images/refresh-vehicle-status.jpg)
+
+> [!CAUTION]
+> Ford advises to be mindful of how often the vehicle is polled, because it has impact on battery life.

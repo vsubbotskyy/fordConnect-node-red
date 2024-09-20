@@ -1,4 +1,5 @@
 const handleResponse = require("./utils/handleResponse");
+const pollCommandStatus = require("./utils/pollCommandStatus");
 
 module.exports = function (RED) {
   function FordConnectRefreshVehicleStatusNode(config) {
@@ -51,70 +52,20 @@ module.exports = function (RED) {
               shape: "ring",
               text: "Waiting for vehicle status",
             });
-            let pollCounter = 0;
-            const possStatusInterval = setInterval(() => {
-              fetch(
-                `https://api.mps.ford.com/api/fordconnect/v1/vehicles/${vehicleId}/statusrefresh/${statusCommandId}`,
-                {
-                  method: "GET",
-                  headers: {
-                    "Application-Id": "AFDC085B-377A-4351-B23E-5E1D35FB3700",
-                    Authorization: "Bearer " + accessToken,
-                  },
-                }
-              )
-                .then((response) => {
-                  if (
-                    !handleResponse(
-                      response,
-                      node,
-                      "FordConnect. Refresh vehicle status. Polling.",
-                      send,
-                      done
-                    )
-                  ) {
-                    return;
-                  }
-                  this.log(
-                    "FordConnect. Refresh vehicle status. polling received response"
-                  );
-                  return response.json();
-                })
-                .then((data) => {
-                  msg.payload = data;
-                  this.status({
-                    fill: "green",
-                    shape: "dot",
-                    text: "Vehicle status updated",
-                  });
-                  send([msg, null]);
-                  done();
-                  clearInterval(possStatusInterval);
-                })
-                .catch((error) => {
-                  this.status({ fill: "red", shape: "ring", text: "Error" });
-                  this.error(
-                    "FordConnect. Refresh vehicle status. polling fetching error: " +
-                      error
-                  );
-                  done(error);
-                  clearInterval(possStatusInterval);
-                });
 
-              pollCounter++;
-              if (pollCounter >= node.maxRetries) {
-                this.status({
-                  fill: "red",
-                  shape: "ring",
-                  text: "Max retries reached",
-                });
-                this.error(
-                  "FordConnect. Refresh vehicle status. Max retries reached"
-                );
-                done(new Error("Max retries reached"));
-                clearInterval(possStatusInterval);
-              }
-            }, node.pollInterval * 1000);
+            pollCommandStatus(
+              `https://api.mps.ford.com/api/fordconnect/v1/vehicles/${vehicleId}/statusrefresh/${statusCommandId}`,
+              accessToken,
+              node,
+              msg,
+              {
+                send,
+                done,
+              },
+              "FordConnect. Refresh vehicle status.",
+              node.pollInterval,
+              node.maxRetries
+            );
           } else {
             msg.payload = data;
             this.status({

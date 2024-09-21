@@ -8,7 +8,7 @@ function handleResponse(response, node, msg, send, done) {
     node.log(`${msg} fetch failed with status code: ${response.status}`);
     switch (response.status) {
       case 401:
-        node.error(`${msg} Unauthorized request`);
+        node.error("Unauthorized request");
         node.status({
           fill: "red",
           shape: "ring",

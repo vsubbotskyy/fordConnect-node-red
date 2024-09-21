@@ -8,7 +8,7 @@ function pollCommandStatus(
   msg,
   nodeRedProps,
   logString = "FordConnect.",
-  pollInterval = 1,
+  pollInterval = 8,
   maxRetries = 3
 ) {
   let pollCounter = 0;
@@ -37,15 +37,37 @@ function pollCommandStatus(
         return response.json();
       })
       .then((data) => {
-        msg.payload = data;
-        node.status({
-          fill: "green",
-          shape: "dot",
-          text: "Vehicle status updated",
-        });
-        nodeRedProps.send([msg, null]);
-        nodeRedProps.done();
-        clearInterval(interval);
+        if (data.commandStatus === "COMPLETED") {
+          node.log(`${logString} polling completed`);
+          msg.payload = data;
+          node.status({
+            fill: "green",
+            shape: "dot",
+            text: "Command completed",
+          });
+          nodeRedProps.send([msg, null]);
+          nodeRedProps.done();
+          clearInterval(interval);
+          return;
+        } else if (data.commandStatus === "FAILED") {
+          node.log(`${logString} polling failed`);
+          node.status({
+            fill: "red",
+            shape: "ring",
+            text: "Command failed",
+          });
+          nodeRedProps.send([null, { payload: data }]);
+          nodeRedProps.done();
+          clearInterval(interval);
+          return;
+        } else {
+          node.log(`${logString} polling status: ${data.commandStatus}`);
+          node.status({
+            fill: "yellow",
+            shape: "ring",
+            text: `Polling. Status: ${data.commandStatus}`,
+          });
+        }
       })
       .catch((error) => {
         node.status({ fill: "red", shape: "ring", text: "Error" });

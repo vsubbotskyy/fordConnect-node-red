@@ -15,7 +15,9 @@
       "fordconnect-get-vehicle-list": "get-vehicle-list.js",
       "fordconnect-get-vehicle-info": "get-vehicle-info.js",
       "fordconnect-get-tokens": "get-tokens.js",
-      "fordconnect-refresh-vehicle-status": "refresh-vehicle-status.js"
+      "fordconnect-refresh-vehicle-status": "refresh-vehicle-status.js",
+      "fordconnect-get-vehicle-location": "get-vehicle-location.js",
+      "fordconnect-refresh-vehicle-location": "refresh-vehicle-location.js"
     }
   },
   "repository": {
@@ -24,5 +26,8 @@
   },
   "engines": {
     "node": ">=18.0.0"
+  },
+  "scripts": {
+    "publish": "npm publish --access public"
   }
 }

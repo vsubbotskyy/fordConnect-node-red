@@ -19,6 +19,7 @@ function handleResponse(response, node, msg, send, done) {
           {
             payload: "Unauthorized request. Please get the new access token",
           },
+          response,
         ]);
         break;
       default:
@@ -28,6 +29,7 @@ function handleResponse(response, node, msg, send, done) {
           shape: "ring",
           text: response.statusText,
         });
+        send([null, null, { payload: response }]);
     }
     done(response.statusText);
     return false;

@@ -39,7 +39,19 @@ module.exports = function (RED) {
             return;
           }
           this.log("FordConnect. Get vehicle info. received response");
-          return response.json();
+          this.trace("FordConnect. Get vehicle info. response: " + response);
+          if (response) {
+            return response.json();
+          } else {
+            this.status({
+              fill: "red",
+              shape: "ring",
+              text: "Empty response",
+            });
+            this.error("FordConnect. Get vehicle info. Empty response");
+            done("Empty response");
+            send([null, null, { payload: "Empty response" }]);
+          }
         })
         .then((data) => {
           msg.payload = data;
@@ -48,7 +60,7 @@ module.exports = function (RED) {
             shape: "dot",
             text: "Vehicle info ready",
           });
-          send([msg, null]);
+          send([msg, null, null]);
           done();
         })
         .catch((error) => {

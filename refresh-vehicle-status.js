@@ -73,7 +73,7 @@ module.exports = function (RED) {
               shape: "dot",
               text: "Vehicle status updated",
             });
-            send([msg, null]);
+            send([msg, null, null]);
             done();
           }
         })

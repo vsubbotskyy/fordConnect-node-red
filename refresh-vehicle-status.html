@@ -3,7 +3,7 @@
     category: "FordConnect",
     color: "#fc6603",
     inputs: 1,
-    outputs: 2,
+    outputs: 3,
     icon: "Ford-logo.svg",
     defaults: {
       name: { value: "" },
@@ -55,4 +55,32 @@
 
 <script type="text/html" data-help-name="fordconnect-refresh-vehicle-status">
   <p>Refresh vehicle status in the FordConnect cloud</p>
+  <h3>Input</h3>
+  <p>Any input to trigger the request</p>
+  <h3>Output</h3>
+  <dl class="message-properties">
+    <dt>
+      Success
+      <span class="property-type">API response</span>
+    </dt>
+    <dd>This output is only used for successful requests</dd>
+    <dt>
+      Unauthorized
+      <span class="property-type">401 API response</span>
+    </dt>
+    <dd>This output is only used for requests failed with 401 status code</dd>
+    <dt>
+      Other errors
+      <span class="property-type">API response</span>
+    </dt>
+    <dd>
+      This output is only used for requests failed with other status codes
+    </dd>
+  </dl>
+  <h3>Details</h3>
+  <p>
+    This node will make a single request to update the vehicle state, and then
+    poll for the command status width the interval set in node config (default
+    is 8 seconds)
+  </p>
 </script>

@@ -27,7 +27,7 @@ After tokens are generated and saved to context you can start making requests to
 Access token is valid for 20 minutes, so if the request is failed with 401 status the token is probably expired. Failed requests with 401 status code will trigger output on the second output (to which get new tokens node can be hooked up). Other errors will be forwarded to the third output
 ![get vehicle details](https://vsubbotskyy.github.io/fordConnect-node-red/images/get-vehicle-details.jpg)
 
-By default the car should send update on ignition status change. Sometimes vehicle info can be outdated, because server will return cached last values. To fetch the relevant data vehicle status request can be made. The request is non-blocking, so to delay output until refresh is completed "Wait for result check box" can be enabled in node config. There's also poll interval and max retry settings.
+By default the car should send update on ignition status change. Sometimes vehicle info can be outdated, because server will return cached last values. To fetch the relevant data refresh vehicle status request can be made. The request is non-blocking, so to delay output until refresh is completed "Wait for result check box" can be enabled in node config. There's also poll interval and max retry settings.
 ![refresh vehicle status](https://vsubbotskyy.github.io/fordConnect-node-red/images/refresh-vehicle-status.jpg)
 
 To get relevant data from the car the flow might look like this

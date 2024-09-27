@@ -3,7 +3,7 @@
     category: "FordConnect",
     color: "#fc6603",
     inputs: 1,
-    outputs: 1,
+    outputs: 2,
     icon: "Ford-logo.svg",
     defaults: {
       name: { value: "" },
@@ -52,22 +52,19 @@
     Forwarding msg.payload along with generated tokens and clientId,
     clientSecret
   </p>
-  <h3>Details</h3>
-  <p>
-    The clientId and clientSecret pair will be stored to the flow context for
-    future use as <strong>fordConnectClientId</strong>,
-    <strong>fordConnectClientSecret</strong>
-  </p>
-  <p>
-    These values can be used in other nodes by accessing
-    <code>flow.get('fordConnectClientId')</code> etc.
-  </p>
-  <p>
-    To preserve context between node-red restarts you can configure node-red to
-    save context to the file system. More details
-    <a
-      href="https://nodered.org/docs/user-guide/context#saving-context-data-to-the-file-system"
-      >here</a
-    >
-  </p>
+  <h3>Output</h3>
+  <dl class="message-properties">
+    <dt>
+      Success
+      <span class="property-type">API response</span>
+    </dt>
+    <dd>This output is only used for successful requests</dd>
+    <dt>
+      Errors
+      <span class="property-type">API response</span>
+    </dt>
+    <dd>
+      This output is only used for failed requests
+    </dd>
+  </dl>
 </script>

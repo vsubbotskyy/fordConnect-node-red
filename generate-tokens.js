@@ -24,7 +24,6 @@ module.exports = function (RED) {
             client_id: node.clientId,
             client_secret: node.clientSecret,
             code: node.authCode,
-            //redirect_uri: "https%3A%2F%2Flocalhost%3A3000"
           }),
         }
       )
@@ -39,43 +38,58 @@ module.exports = function (RED) {
               "FordConnect. Generate tokens. fetch failed with status code: " +
                 response.status
             );
-            this.error(
-              "FordConnect. Generate tokens. error: " + response.statusText
-            );
-            done(response.statusText);
           }
           this.log("FordConnect. Generate tokens. received response");
           return response.json();
         })
         .then((data) => {
-          this.log(
-            "FordConnect. Generate tokens. data: " + JSON.stringify(data)
-          );
-          const accessToken = data.access_token;
-          const refreshToken = data.refresh_token;
+          if (data.error) {
+            send([
+              null,
+              {
+                payload: {
+                  error: data.error,
+                  description: data.error_description,
+                },
+              },
+            ]);
+            this.status({ fill: "red", shape: "ring", text: data.error });
+          } else {
+            this.log(
+              "FordConnect. Generate tokens. data: " + JSON.stringify(data)
+            );
+            const accessToken = data.access_token;
+            const refreshToken = data.refresh_token;
 
-          this.log("FordConnect. Generate tokens. accessToken: " + accessToken);
-          this.log(
-            "FordConnect. Generate tokens. refreshToken: " + refreshToken
-          );
-          if (this.err) {
-            this.error("FordConnect. Generate tokens. error: " + this.err);
-            done(err);
-            return;
-          }
-          msg.payload = {
-            ...msg.payload,
-            accessToken: accessToken,
-            refreshToken: refreshToken,
-          };
-          if (msg.payload.accessToken && msg.payload.refreshToken) {
-            this.status({ fill: "green", shape: "dot", text: "Tokens ready" });
-            send(msg);
+            this.log(
+              "FordConnect. Generate tokens. accessToken: " + accessToken
+            );
+            this.log(
+              "FordConnect. Generate tokens. refreshToken: " + refreshToken
+            );
+            if (this.err) {
+              this.error("FordConnect. Generate tokens. error: " + this.err);
+              done(err);
+              return;
+            }
+            msg.payload = {
+              ...msg.payload,
+              accessToken: accessToken,
+              refreshToken: refreshToken,
+            };
+            if (msg.payload.accessToken && msg.payload.refreshToken) {
+              this.status({
+                fill: "green",
+                shape: "dot",
+                text: "Tokens ready",
+              });
+              send([msg, null]);
+            }
           }
         })
         .catch((error) => {
           this.status({ fill: "red", shape: "ring", text: "Error" });
-          this.error("FordConnect. Generate tokens. fetching error: " + error);
+          this.error("FordConnect. Generate tokens. Error: " + error);
           done(error);
         });
     });

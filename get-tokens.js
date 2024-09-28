@@ -5,7 +5,7 @@ module.exports = function (RED) {
       const clientId = this.context().flow.get("fordConnectClientId");
       const clientSecret = this.context().flow.get("fordConnectClientSecret");
       const refreshToken = this.context().flow.get("fordConnectRefreshToken");
-      this.log(
+      this.trace(
         `FordConnect. Get tokens. Client ID: ${clientId}, Client Secret: ${clientSecret}, Refresh Token: ${refreshToken}`
       );
       fetch(
@@ -52,37 +52,41 @@ module.exports = function (RED) {
           return response.json();
         })
         .then((data) => {
-          this.log("FordConnect. Get tokens. data: " + JSON.stringify(data));
+          this.trace("FordConnect. Get tokens. data: " + JSON.stringify(data));
           const accessToken = data.access_token;
           const refreshToken = data.refresh_token;
 
-          this.log("FordConnect. Get tokens. accessToken: " + accessToken);
-          this.log("FordConnect. Get tokens. refreshToken: " + refreshToken);
+          this.trace("FordConnect. Get tokens. accessToken: " + accessToken);
+          this.trace("FordConnect. Get tokens. refreshToken: " + refreshToken);
           if (this.err) {
             this.error("FordConnect. Get tokens. error: " + this.err);
             done(err);
             return;
           }
 
-          // warn if refresh token is expiring in less than 7 days
+          // warn if refresh token is expiring in less than 2 days
           if (
             data.refresh_token_expires_in &&
-            data.refresh_token_expires_in < 60 * 60 * 24 * 7
+            data.refresh_token_expires_in < 60 * 60 * 24 * 2
           ) {
             this.status({
               fill: "yellow",
               shape: "ring",
               text: "Refresh token is about to expire",
             });
+          } else {
+            this.status({
+              fill: "green",
+              shape: "dot",
+              text: "Tokens refreshed",
+            });
           }
           msg.payload = {
-            ...msg.payload,
             accessToken: accessToken,
             refreshToken: refreshToken,
             refreshTokenExpiresIn: data.refresh_token_expires_in,
           };
           if (msg.payload.accessToken && msg.payload.refreshToken) {
-            this.status({});
             send(msg);
           }
         })

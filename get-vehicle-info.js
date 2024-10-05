@@ -6,7 +6,7 @@ module.exports = function (RED) {
     var node = this;
     node.vehicleId = config.vehicleId;
     this.on("input", function (msg, send, done) {
-      const accessToken = this.context().flow.get("fordConnectAccessToken");
+      const accessToken = this.context().global.get("fordConnectAccessToken");
       const vehicleId = node.vehicleId;
       this.log(
         `FordConnect. Get vehicle info. fetching data. accessToken: ${accessToken} vehicleId: ${vehicleId}`

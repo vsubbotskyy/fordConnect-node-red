@@ -12,8 +12,8 @@ module.exports = function (RED) {
       this.log("FordConnect. Save tokens. accessToken: " + accessToken);
       this.log("FordConnect. Save tokens. refreshToken: " + refreshToken);
       // save tokens to context
-      this.context().flow.set("fordConnectAccessToken", accessToken);
-      this.context().flow.set("fordConnectRefreshToken", refreshToken);
+      this.context().global.set("fordConnectAccessToken", accessToken);
+      this.context().global.set("fordConnectRefreshToken", refreshToken);
       if (this.err) {
         this.error("FordConnect. Save tokens. error: " + this.err);
         done(err);

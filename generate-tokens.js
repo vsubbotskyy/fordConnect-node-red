@@ -12,8 +12,8 @@ module.exports = function (RED) {
         "FordConnect. Generate tokens. clientSecret: " + node.clientSecret
       );
       // save clientId/Secret to context
-      this.context().flow.set("fordConnectClientId", node.clientId);
-      this.context().flow.set("fordConnectClientSecret", node.clientSecret);
+      this.context().global.set("fordConnectClientId", node.clientId);
+      this.context().global.set("fordConnectClientSecret", node.clientSecret);
       this.status({ fill: "blue", shape: "ring", text: "Generating tokens" });
       fetch(
         "https://dah2vb2cprod.b2clogin.com/914d88b1-3523-4bf6-9be4-1b96b4f6f919/oauth2/v2.0/token?p=B2C_1A_signup_signin_common",

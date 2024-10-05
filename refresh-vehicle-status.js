@@ -10,7 +10,7 @@ module.exports = function (RED) {
     node.pollInterval = config.pollInterval;
     node.maxRetries = config.maxRetries;
     this.on("input", function (msg, send, done) {
-      const accessToken = this.context().flow.get("fordConnectAccessToken");
+      const accessToken = this.context().global.get("fordConnectAccessToken");
       const vehicleId = node.vehicleId;
       this.log(`FordConnect. Refresh vehicle status. vehicleId: ${vehicleId}`);
       this.status({

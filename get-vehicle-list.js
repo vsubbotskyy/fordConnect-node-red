@@ -3,7 +3,7 @@ module.exports = function (RED) {
     RED.nodes.createNode(this, config);
     var node = this;
     this.on("input", function (msg, send, done) {
-      const accessToken = this.context().flow.get("fordConnectAccessToken");
+      const accessToken = this.context().global.get("fordConnectAccessToken");
       this.log(
         `FordConnect. Get vehicle list. fetching data. accessToken: ${accessToken}`
       );

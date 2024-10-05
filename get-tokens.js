@@ -2,9 +2,9 @@ module.exports = function (RED) {
   function FordConnectGetTokensNode(config) {
     RED.nodes.createNode(this, config);
     this.on("input", function (msg, send, done) {
-      const clientId = this.context().flow.get("fordConnectClientId");
-      const clientSecret = this.context().flow.get("fordConnectClientSecret");
-      const refreshToken = this.context().flow.get("fordConnectRefreshToken");
+      const clientId = this.context().global.get("fordConnectClientId");
+      const clientSecret = this.context().global.get("fordConnectClientSecret");
+      const refreshToken = this.context().global.get("fordConnectRefreshToken");
       this.trace(
         `FordConnect. Get tokens. Client ID: ${clientId}, Client Secret: ${clientSecret}, Refresh Token: ${refreshToken}`
       );

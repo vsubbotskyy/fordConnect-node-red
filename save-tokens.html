@@ -47,13 +47,13 @@
   <h3>Details</h3>
   <p>Tokens provided in msg.payload will override node configuration.</p>
   <p>
-    The tokens will be stored to the flow context for future use as
+    The tokens will be stored to the global context for future use as
     <strong>fordConnectAccessToken</strong>,
     <strong>fordConnectRefreshToken</strong>
   </p>
   <p>
-    These values can be used in other nodes by accessing
-    <code>flow.get('fordConnectAccessToken')</code> etc.
+    These values can be used in other nodes by accessing context, for instance:
+    <code>global.get('fordConnectAccessToken')</code>
   </p>
   <p>
     To preserve context between node-red restarts you can configure node-red to
